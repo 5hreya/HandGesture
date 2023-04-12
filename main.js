@@ -1,4 +1,4 @@
-//https://teachablemachine.withgoogle.com/models/J2tuBbTBR/
+
 
 prediction = ""
 
@@ -21,8 +21,34 @@ function capture_img(){
 
 console.log("ml5 version", ml5.version)
 
-addmodel = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/4HPZO0Ku-/model.json", model_loaded)
+addmodel = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/cw5u6uC5L/model.json", model_loaded)
 
 function model_loaded(){
     console.log("Model has loaded.")
+}
+
+function check(){
+    var snapshot = document.getElementById("img")
+    addmodel.classify(snapshot, gotResult)
+}
+
+function gotResult(error, results){
+    if(error){
+        console.log(error)
+    }
+    else{
+        console.log(results)
+        document.getElementById("Prediction").innerHTML = results[0].label
+        prediction = results[0].label
+
+        if(results[0].label == "Thumbs Up"){
+            document.getElementById("Emoji").innerHTML = "&#128077";
+        }
+        else if(results[0].label == "Peace"){
+            document.getElementById("Emoji").innerHTML = "&#9996";
+        }
+        else{
+            document.getElementById("Emoji").innerHTML = "&#128076";
+        }
+    }
 }
